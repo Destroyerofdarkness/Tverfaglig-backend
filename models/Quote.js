@@ -5,7 +5,8 @@ const quoteSchema = new Schema({
     quote:{
         type: String,
         required: true,
-        maxLength: 100
+        maxLength: 100,
+        unique: true
     },
     origin:{
         type:String,

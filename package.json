@@ -18,6 +18,7 @@
   "homepage": "https://github.com/Destroyerofdarkness/Tverfagligprosjekt-12.01.2026#readme",
   "description": "",
   "dependencies": {
+    "argon2": "^0.44.0",
     "dotenv": "^17.2.3",
     "ejs": "^3.1.10",
     "express": "^5.2.1",
