@@ -3,6 +3,7 @@ const controller = require("../controller/authorized_controllers")
 const {authorize, authenticate}= require("../middleware/jwtAuth")
 router.get("/:user",authenticate, authorize,controller.user_page_priv_render)
 
+router.post("/:user",authorize, controller.user_page_priv_post)
 
 
 module.exports = router

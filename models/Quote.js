@@ -5,18 +5,28 @@ const quoteSchema = new Schema({
     quote:{
         type: String,
         required: true,
-        maxLength: 100,
-        unique: true
+        maxLength: [100, "The max length of the quote is 100 characters"],
+        unique: [true, "Enter the content of the Quote"]
     },
     origin:{
         type:String,
-        required:true,
+        required:[true, "Enter the origin of the Quote"],
     },
     createdBy:{
         type:String,
-        required:true
+        required:true, 
     }
 })
+
+quoteSchema.statics.publish = async (info)=>{
+const newQuote = await new Quotes({
+    quote:info.quote,
+    origin:info.origin,
+    createdBy:info.user
+})
+await newQuote.save()
+return;
+}
 
 
 const Quotes = model("Quotes", quoteSchema)
