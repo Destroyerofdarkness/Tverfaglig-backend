@@ -4,7 +4,11 @@ const app = express();
 
 const path = require("path");
 
+const cookieParser = require("cookie-parser")
+
 const { connectToMongoDb } = require("./handlers/mongoDbHandler.js");
+
+const {checkUser}= require("./middleware/jwtAuth.js")
 
 require("dotenv").config();
 
@@ -13,6 +17,10 @@ app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "ejs");
 
 app.use(express.json());
+
+app.use(cookieParser())
+
+app.use(checkUser)
 
 app.use(express.urlencoded({ extended: true }));
 

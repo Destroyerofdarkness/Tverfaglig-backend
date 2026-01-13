@@ -1,5 +1,12 @@
-const User = require("../models/User.js")
+const User = require("../models/User.js");
+const jwt = require("jsonwebtoken");
 
+const maxValidDate = 24 * 60 * 60;
+const signJwt = (id) => {
+  return jwt.sign({ id }, process.env.secret, {
+    expiresIn: maxValidDate,
+  });
+};
 
 const render_login = (req, res) => {
   try {
@@ -19,26 +26,28 @@ const render_register = (req, res) => {
   }
 };
 
-const sign_in_user = async(req,res)=>{
-  try{
-    const userId = await User.login(req.body)
-    res.status(200).redirect("/")
-  }catch(err){
+const sign_in_user = async (req, res) => {
+  try {
+    const userId = await User.login(req.body);
+    const token = signJwt(userId);
+    res.cookie("jwt", token, { httpOnly: true, maxAge: maxValidDate * 1000 });
+    res.status(200).redirect("/");
+  } catch (err) {
     console.log(err);
-    res.status(300).send({err})
+    res.status(300).send({ err });
   }
-}
+};
 
-const sign_up_user = async(req,res)=>{
-    const {passwd,conPass} = req.body
-    try{
-        const userId = await User.register(req.body)
-        res.status(200).redirect("/")
-    }catch(err){
-        console.log(err)
-        res.status(300).send({err})
-    }
-}
+const sign_up_user = async (req, res) => {
+  try {
+    const userId = await User.register(req.body);
+    const token = signJwt(userId);
+    res.cookie("jwt", token, { httpOnly: true, maxAge: maxValidDate * 1000 });
+    res.status(200).redirect("/");
+  } catch (err) {
+    console.log(err);
+    res.status(300).send({ err });
+  }
+};
 
-
-module.exports = {render_login, render_register, sign_up_user, sign_in_user}
+module.exports = { render_login, render_register, sign_up_user, sign_in_user };

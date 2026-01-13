@@ -5,7 +5,11 @@
 </div>
 <h2><%= title %></h2>
 <nav>
-    <a href="/sign-in">Log in</a>
+    <% if(user){ %>
+    <a href="/sign-out">Log out</a>
+    <% }else{ %>
+        <a href="/sign-in">Log in</a>
+        <% } %>
 </nav>
 </header>
 <body>
