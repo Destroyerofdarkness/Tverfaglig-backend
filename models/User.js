@@ -1,5 +1,7 @@
 const { Schema, model}= require("mongoose")
 const argon2 = require("argon2")
+const Quotes = require("./Quote.js")
+
 const userSchema = new Schema({
     username:{
         type:String,
@@ -40,6 +42,11 @@ userSchema.statics.login = async(info)=>{
     }
     throw Error("User not found")
     
+}
+
+userSchema.statics.findQuotes = async(user)=>{
+    const userQuotes = await Quotes.find({createdBy:user})
+    return userQuotes
 }
 
 

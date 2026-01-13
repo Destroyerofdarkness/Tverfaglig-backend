@@ -19,4 +19,5 @@ const quoteSchema = new Schema({
 })
 
 
-module.exports = model("Quotes", quoteSchema)
+const Quotes = model("Quotes", quoteSchema)
+module.exports = Quotes

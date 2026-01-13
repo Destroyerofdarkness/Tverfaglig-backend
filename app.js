@@ -30,9 +30,18 @@ const main_router = require("./routes/default_router.js");
 
 const auth_router = require("./routes/auth_routes.js");
 
-app.use(main_router);
 
 app.use(auth_router);
+
+app.use(main_router);
+
+app.use((req,res)=>{
+  try{
+    res.status(404).render("404", {title: "Page Not Found"})
+  }catch{
+    res.status(500).send("500 Internal Server Error")
+  }
+})
 
 app.listen(3000, async () => {
   console.log("Server running on port 3000");
