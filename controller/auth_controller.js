@@ -19,21 +19,26 @@ const render_register = (req, res) => {
   }
 };
 
+const sign_in_user = async(req,res)=>{
+  try{
+    const userId = await User.login(req.body)
+    res.status(200).redirect("/")
+  }catch(err){
+    console.log(err);
+    res.status(300).send({err})
+  }
+}
+
 const sign_up_user = async(req,res)=>{
     const {passwd,conPass} = req.body
     try{
-        if(passwd === conPass){
         const userId = await User.register(req.body)
-        
-        res.redirect("/")
-        }else{
-            throw Error("Password doesn't match")
-        }
+        res.status(200).redirect("/")
     }catch(err){
         console.log(err)
-        res.status(500).send(err)
+        res.status(300).send({err})
     }
 }
 
 
-module.exports = {render_login, render_register, sign_up_user}
+module.exports = {render_login, render_register, sign_up_user, sign_in_user}

@@ -22,9 +22,24 @@ userSchema.pre("save",async function () {
 })
 
 userSchema.statics.register = async(info) =>{
+ if(info.passwd === info.conPass){
 const newUser = new User({username:info.username,passwd:info.passwd})
 await newUser.save();
 return newUser._id
+}
+throw Error("Password doesn't match")
+}
+
+userSchema.statics.login = async(info)=>{
+    const user = await User.findOne({username: info.username})
+    if(user){
+        if(argon2.verify(user.passwd, info.passwd)){
+        return user._id
+    }
+    throw Error("Wrong Password")
+    }
+    throw Error("User not found")
+    
 }
 
 
