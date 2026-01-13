@@ -4,6 +4,7 @@ main{
     flex-direction: column;
     align-self: center;
     margin-top: 4vw;
+    gap: 3vw;
 }
 main section{
     width: 50vw;
