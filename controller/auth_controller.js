@@ -46,9 +46,7 @@ const checkUser = (req, res, next) => {
 const sign_up_user = async (req, res) => {
   try {
     const userId = await User.register(req.body);
-    const token = signJwt(userId);
-    res.cookie("jwt", token, { httpOnly: true, maxAge: maxValidDate * 1000 });
-    res.status(200).json({ success: true });
+    res.status(200).json({ userId });
   } catch (err) {
     const errors = handleUserError(err);
     res.status(300).json({ errors });
