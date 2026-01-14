@@ -2,11 +2,6 @@ const User = require("../models/User.js");
 const jwt = require("jsonwebtoken");
 const { handleUserError } = require("../handlers/errorHandlers.js");
 const maxValidDate = 24 * 60 * 60;
-const signJwt = (id) => {
-  return jwt.sign({ id }, process.env.secret, {
-    expiresIn: maxValidDate,
-  });
-};
 
 
 
@@ -21,7 +16,7 @@ const sign_in_user = async (req, res) => {
   }
 };
 
-const checkUser = (req, res, next) => {
+const findUser = (req, res, next) => {
   const {token} = req.body;
  try{
   if (token) {
@@ -63,4 +58,4 @@ const user_delete = async(req,res)=>{
     }
 }
 
-module.exports = {  sign_up_user, sign_in_user, user_delete, checkUser };
+module.exports = {  sign_up_user, sign_in_user, user_delete, findUser };
