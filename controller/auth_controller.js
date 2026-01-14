@@ -54,12 +54,12 @@ const sign_up_user = async (req, res) => {
 };
 
 const user_delete = async(req,res)=>{
-    const user = req.params.user
+    const {user} = req.body
     try{
       await User.findOneAndDelete({username:user})
-      res.status(200).redirect("/sign-out")
+      res.status(200).json({success:true})
     }catch(err){
-        res.status(500).send(err)
+        res.status(500).json({success:false})
     }
 }
 
