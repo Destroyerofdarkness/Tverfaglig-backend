@@ -6,7 +6,6 @@ const randomQoute = (list) => {
   return list[random];
 };
 
-
 const home_quote_get = async (req, res) => {
   try {
     const quoteList = await Quote.find();
@@ -14,10 +13,10 @@ const home_quote_get = async (req, res) => {
     res.status(200).json({ quote });
   } catch (err) {
     res.status(500);
-    console.log(err)
+    console.log(err);
   }
 };
 
 module.exports = {
-  home_quote_get
+  home_quote_get,
 };
