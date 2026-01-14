@@ -1,6 +1,5 @@
 const router = require("express").Router();
 const controller = require("../controller/auth_controller.js");
-const {authorize}= require("../middleware/jwtAuth")
 
 router.post("/sign-up", controller.sign_up_user)
 

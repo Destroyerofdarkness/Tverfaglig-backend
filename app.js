@@ -4,8 +4,6 @@ const app = express();
 
 const cors = require("cors")
 
-const {checkUser}= require("./middleware/jwtAuth.js")
-
 const { connectToMongoDb } = require("./handlers/mongoDbHandler.js");
 
 require("dotenv").config();
