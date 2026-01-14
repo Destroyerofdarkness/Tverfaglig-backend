@@ -32,6 +32,6 @@ app.use(main_router);
 
 app.use("/home", authorized_router)
 
-app.listen(4000, async () => {
-  console.log("Server running on port 4000");
+app.listen(6001, async () => {
+  console.log("Server running on port 6001");
 });
