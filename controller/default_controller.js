@@ -6,20 +6,6 @@ const randomQoute = (list) => {
   return list[random];
 };
 
-const user_page_public_render = async (req, res, next) => {
-  const username = req.params.user;
-  try {
-    console.log(username);
-    const quotes = await User.findQuotes(username);
-    const user = await User.findOne({ username: username });
-    console.log(quotes);
-    res.render("userPub", { quotes, title: `${user.username}'s quotes` });
-  } catch (err) {
-    console.log(err);
-    res.status(500);
-    next();
-  }
-};
 
 const home_quote_get = async (req, res) => {
   try {
@@ -33,6 +19,5 @@ const home_quote_get = async (req, res) => {
 };
 
 module.exports = {
-  user_page_public_render,
   home_quote_get
 };

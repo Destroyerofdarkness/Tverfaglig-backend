@@ -3,16 +3,16 @@ const Quote = require("../models/Quote.js");
 const {handleQuoteError}= require("../handlers/errorHandlers.js")
 
 
-const user_page_priv_render = async (req, res, next) => {
+const user_data = async (req, res, next) => {
   const username = req.params.user;
   try {
     const quotes = await User.findQuotes(username);
     const user = await User.findOne({ username: username });
-    console.log(quotes);
-    res.render("userPriv", { quotes, title: `Quotes - ${user.username}` });
+    console.log("User data:",user,quotes);
+    res.json({user,quotes})
   } catch (err) {
-    res.status(500).send(err);
-    next();
+    console.log(err)
+    res.status(500).json({err})
   }
 };
 
@@ -28,4 +28,4 @@ const user_page_priv_post = async (req, res) => {
 
 
 
-module.exports = { user_page_priv_render, user_page_priv_post };
+module.exports = {user_data, user_page_priv_post };
