@@ -2,29 +2,25 @@ const express = require("express");
 
 const app = express();
 
-const path = require("path");
-
-const cookieParser = require("cookie-parser")
-
-const { connectToMongoDb } = require("./handlers/mongoDbHandler.js");
+const cors = require("cors")
 
 const {checkUser}= require("./middleware/jwtAuth.js")
 
+const { connectToMongoDb } = require("./handlers/mongoDbHandler.js");
+
 require("dotenv").config();
 
-app.use(express.static(path.join(__dirname, "public")));
-
-app.set("view engine", "ejs");
-
 app.use(express.json());
-
-app.use(cookieParser())
-
-app.use(checkUser)
 
 app.use(express.urlencoded({ extended: true }));
 
 connectToMongoDb(process.env.mongodb);
+
+app.use(cors({
+  origin: "http://localhost:3000",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}))
 
 const main_router = require("./routes/default_router.js");
 
@@ -38,14 +34,6 @@ app.use(main_router);
 
 app.use("/home", authorized_router)
 
-app.use((req,res)=>{
-  try{
-    res.status(404).render("404", {title: "Page Not Found"})
-  }catch{
-    res.status(500).send("500 Internal Server Error")
-  }
-})
-
-app.listen(3000, async () => {
-  console.log("Server running on port 3000");
+app.listen(4000, async () => {
+  console.log("Server running on port 4000");
 });
