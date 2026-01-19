@@ -35,7 +35,7 @@ userSchema.statics.register = async (info) => {
 userSchema.statics.login = async (info) => {
   const user = await User.findOne({ username: info.username });
   if (user) {
-    if (argon2.verify(user.passwd, info.passwd)) {
+    if ( await argon2.verify(user.passwd, info.passwd)) {
       return user._id;
     }
     throw Error("Wrong Password");
